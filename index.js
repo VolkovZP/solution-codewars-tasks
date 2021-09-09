@@ -1,22 +1,15 @@
 'use strict';
 /*
-# ROT13
+# Moving Zeros To The End
 
-ROT13 is a simple letter substitution cipher that replaces a letter with the letter 13 letters after it in the alphabet. ROT13 is an example of the Caesar cipher.
-
-Create a function that takes a string and returns the string ciphered with Rot13. If there are numbers or special characters included in the string, they should be returned as they are. Only letters from the latin/english alphabet should be shifted, like in the original Rot13 "implementation".
+Write an algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.
 */
 
-function rot13(string) {
-    const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
-    let res = ''
-    for (let i = 0; i < string.length; i++) {
-        let index = input.indexOf(string[i])
-        if (index !== -1) {
-            res += output[index]
-        } else res += string[i]
-    }
-    return res;
+//returns[false,1,1,2,1,3,"a",0,0]
+
+let moveZeros = function (arr) {
+    let firstSubArr = arr.filter(item => item !== 0);
+    let secondSubArr = arr.filter(item => item === 0);
+    return [...firstSubArr, ...secondSubArr]
 }
-console.log(rot13('hello'))
+console.log(moveZeros([false, 1, 0, 1, 2, 0, 1, 3, "a"]));
