@@ -1,39 +1,32 @@
 'use strict';
 /*
-# Tic-Tac-Toe Checker
+# Who likes it?
 
-If we were to set up a Tic-Tac-Toe game, we would want to know whether the board's current state is solved, wouldn't we? Our goal is to create a function that will check that for us!
+You probably know the "like" system from Facebook and other pages. People can "like" blog posts, pictures or other items. We want to create the text that should be displayed next to such an item.
 
-Assume that the board comes in the form of a 3x3 array, where the value is 0 if a spot is empty, 1 if it is an "X", or 2 if it is an "O", like so:
-
-[[0, 0, 1],
- [0, 1, 2],
- [2, 1, 0]]
-We want our function to return:
-
--1 if the board is not yet finished AND no one has won yet (there are empty spots),
-1 if "X" won,
-2 if "O" won,
-0 if it's a cat's game (i.e. a draw).
-You may assume that the board passed in is valid in the context of a game of Tic-Tac-Toe.
+Implement the function likes which takes an array containing the names of people that like an item. It must return the display text as shown in the examples:
 */
 
+/**
+likes([]), 'no one likes this');
+likes(['Peter']), 'Peter likes this');
+likes(['Jacob', 'Alex']), 'Jacob and Alex like this');
+likes(['Max', 'John', 'Mark']), 'Max, John and Mark like this');
+likes(['Alex', 'Jacob', 'Mark', 'Max']), 'Alex, Jacob and 2 others like this');
+ */
 
-function isSolved(board) {
-    for (let i = 0; i < board.length; i++) {
-        if ((board[i].filter(a => a === 1)).length === 3) return 1
-        if ((board[i].filter(a => a === 2)).length === 3) return 2
-        for (let j = 1; j <= 2; j++) {
-            if (board[0][i] === j && board[1][i] === j && board[2][i] === j) return j
-        }
-        //
-        if (board[0][0] === 1 && board[1][1] === 1 && board[2][2] === 1) return 1
-        if (board[0][2] === 1 && board[1][1] === 1 && board[2][0] === 1) return 1
-        if (board[0][2] === 2 && board[1][1] === 2 && board[2][0] === 2) return 2
-        if (board[0][2] === 2 && board[1][1] === 2 && board[2][0] === 2) return 2
-    }
-    for (let i = 0; i < board.length; i++) {
-        if ((board[i].filter(a => a === 0).length) > 0) return -1
-    }
-    return 0
+/**
+ * 
+ * @param {arrey} names 
+ * @returns {string}
+ */
+
+function likes(names) {
+    if (names.length === 1) return `${names} likes this`;
+    else if (names.length === 2) return `${names.join(' and ')} like this`;
+    else if (names.length === 3) return `${names[0]}, ${names[1]} and ${names[2]} like this`
+    else if (names.length > 3) return `${names[0]}, ${names[1]} and ${names.length - 2} others like this`
+    else return 'no one likes this'
 }
+
+console.log((likes(['Max', 'John', 'Mark'])))
