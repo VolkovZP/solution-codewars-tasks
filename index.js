@@ -1,32 +1,24 @@
 'use strict';
 /*
-# Who likes it?
+# Detect Pangram
 
-You probably know the "like" system from Facebook and other pages. People can "like" blog posts, pictures or other items. We want to create the text that should be displayed next to such an item.
+A pangram is a sentence that contains every single letter of the alphabet at least once. For example, the sentence "The quick brown fox jumps over the lazy dog" is a pangram, because it uses the letters A-Z at least once (case is irrelevant).
 
-Implement the function likes which takes an array containing the names of people that like an item. It must return the display text as shown in the examples:
+Given a string, detect whether or not it is a pangram. Return True if it is, False if not. Ignore numbers and punctuation.
 */
 
-/**
-likes([]), 'no one likes this');
-likes(['Peter']), 'Peter likes this');
-likes(['Jacob', 'Alex']), 'Jacob and Alex like this');
-likes(['Max', 'John', 'Mark']), 'Max, John and Mark like this');
-likes(['Alex', 'Jacob', 'Mark', 'Max']), 'Alex, Jacob and 2 others like this');
- */
-
-/**
- * 
- * @param {arrey} names 
- * @returns {string}
- */
-
-function likes(names) {
-    if (names.length === 1) return `${names} likes this`;
-    else if (names.length === 2) return `${names.join(' and ')} like this`;
-    else if (names.length === 3) return `${names[0]}, ${names[1]} and ${names[2]} like this`
-    else if (names.length > 3) return `${names[0]}, ${names[1]} and ${names.length - 2} others like this`
-    else return 'no one likes this'
+function isPangram(string) {
+    const obj = {
+        valid: ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z', 'a', 'e', 'i', 'o', 'u', 'y'].sort(),
+        notValid: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '.', ','],
+    }
+    let result = []
+    string = Array.from(new Set(string.toLowerCase().split('').sort()));
+    for (let item of string) {
+        if (!obj['notValid'].includes(item)) result.push(item);
+    }
+    if (result.join('') === obj['valid'].join('')) return true;
+    return false
 }
+console.log(isPangram("The quick brown fox jumps over the lazy dog"))
 
-console.log((likes(['Max', 'John', 'Mark'])))
