@@ -1,28 +1,33 @@
 'use strict';
-/* # Uncollapse Digits
+/* # Encrypt this!
 
-Task
-You will be given a string of English digits "stuck" together, like this:
 
-"zeronineoneoneeighttwoseventhreesixfourtwofive"
+Description:
+Encrypt this!
 
-Your task is to split the string into separate digits:
+You want to create secret messages which can be deciphered by the Decipher this! kata. Here are the conditions:
 
-"zero nine one one eight two seven three six four two five"
+Your message is a string containing space separated words.
+You need to encrypt each word in the message using the following rules:
+The first letter must be converted to its ASCII code.
+The second letter must be switched with the last letter
+Keepin' it simple: There are no special characters in the input.
+
+Examples:
+encryptThis("Hello") === "72olle"
+encryptThis("good") === "103doo"
+encryptThis("hello world") === "104olle 119drlo"
 
 */
 
-const numberArray = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
-
-function uncollapse(digits, str = '', getDigits = []) {
-    for (let i = 0; i < digits.length; i++) {
-        str += digits[i];
-        if (numberArray.includes(str)) {
-            getDigits.push(str);
-            str = '';
-        }
-    }
-    return getDigits.join(' ')
+const encryptThis = text => {
+    let result = ''
+    text.split(' ').map(item => {
+        item = [...item];
+        [item[1], item[item.length - 1]] = [item[item.length - 1], item[1]]
+        result += item.join('') + ' ';
+    })
+    return result.trimEnd().split(' ').map(item => item[0].charCodeAt() + item.slice(1)).join(' ');
 }
 
-console.log(uncollapse('foursixeighttwofive'))
+console.log(encryptThis('hello world'))
