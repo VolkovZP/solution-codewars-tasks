@@ -1,33 +1,25 @@
 'use strict';
-/* # Encrypt this!
+/* # Pete, the baker
 
+Pete likes to bake some cakes. He has some recipes and ingredients. Unfortunately he is not good in maths. Can you help him to find out, how many cakes he could bake considering his recipes?
 
-Description:
-Encrypt this!
+Write a function cakes(), which takes the recipe (object) and the available ingredients (also an object) and returns the maximum number of cakes Pete can bake (integer). For simplicity there are no units for the amounts (e.g. 1 lb of flour or 200 g of sugar are simply 1 or 200). Ingredients that are not present in the objects, can be considered as 0.
 
-You want to create secret messages which can be deciphered by the Decipher this! kata. Here are the conditions:
-
-Your message is a string containing space separated words.
-You need to encrypt each word in the message using the following rules:
-The first letter must be converted to its ASCII code.
-The second letter must be switched with the last letter
-Keepin' it simple: There are no special characters in the input.
-
-Examples:
-encryptThis("Hello") === "72olle"
-encryptThis("good") === "103doo"
-encryptThis("hello world") === "104olle 119drlo"
-
+// must return 2
+cakes({flour: 500, sugar: 200, eggs: 1}, {flour: 1200, sugar: 1200, eggs: 5, milk: 200});
+// must return 0
+cakes({apples: 3, flour: 300, sugar: 150, milk: 100, oil: 100}, {sugar: 500, flour: 2000, milk: 2000});
 */
 
-const encryptThis = text => {
-    let result = ''
-    text.split(' ').map(item => {
-        item = [...item];
-        [item[1], item[item.length - 1]] = [item[item.length - 1], item[1]]
-        result += item.join('') + ' ';
-    })
-    return result.trimEnd().split(' ').map(item => item[0].charCodeAt() + item.slice(1)).join(' ');
+function cakes(recipe, available) {
+    const result = [];
+    for (let key in recipe) {
+        if (recipe.hasOwnProperty(key) && available.hasOwnProperty(key)) {
+            result.push(Math.floor(available[key] / recipe[key]))
+        } else {
+            return 0
+        }
+    }
+    return Math.min(...result)
 }
-
-console.log(encryptThis('hello world'))
+console.log(cakes({ flour: 500, sugar: 200, eggs: 1 }, { flour: 1200, sugar: 1200, eggs: 5, milk: 200 }))
