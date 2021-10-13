@@ -1,25 +1,26 @@
 'use strict';
-/* # Pete, the baker
+/* # Sum of Digits / Digital Root
 
-Pete likes to bake some cakes. He has some recipes and ingredients. Unfortunately he is not good in maths. Can you help him to find out, how many cakes he could bake considering his recipes?
+Digital root is the recursive sum of all the digits in a number.
 
-Write a function cakes(), which takes the recipe (object) and the available ingredients (also an object) and returns the maximum number of cakes Pete can bake (integer). For simplicity there are no units for the amounts (e.g. 1 lb of flour or 200 g of sugar are simply 1 or 200). Ingredients that are not present in the objects, can be considered as 0.
+Given n, take the sum of the digits of n. If that value has more than one digit, continue reducing in this way until a single-digit number is produced. The input will be a non-negative integer.
 
-// must return 2
-cakes({flour: 500, sugar: 200, eggs: 1}, {flour: 1200, sugar: 1200, eggs: 5, milk: 200});
-// must return 0
-cakes({apples: 3, flour: 300, sugar: 150, milk: 100, oil: 100}, {sugar: 500, flour: 2000, milk: 2000});
+16  -->  1 + 6 = 7
+942  -->  9 + 4 + 2 = 15  -->  1 + 5 = 6
+132189  -->  1 + 3 + 2 + 1 + 8 + 9 = 24  -->  2 + 4 = 6
+493193  -->  4 + 9 + 3 + 1 + 9 + 3 = 29  -->  2 + 9 = 11  -->  1 + 1 = 2
+
 */
 
-function cakes(recipe, available) {
-    const result = [];
-    for (let key in recipe) {
-        if (recipe.hasOwnProperty(key) && available.hasOwnProperty(key)) {
-            result.push(Math.floor(available[key] / recipe[key]))
-        } else {
-            return 0
-        }
+const digital_root = (number) => {
+    const arr = String(number).split('')
+    const result = arr.reduce((acc, item) => acc += +item, 0)
+    if (arr.length > 1) {
+        arr.pop();
+        return digital_root(result)
     }
-    return Math.min(...result)
+    return result
 }
-console.log(cakes({ flour: 500, sugar: 200, eggs: 1 }, { flour: 1200, sugar: 1200, eggs: 5, milk: 200 }))
+
+console.log(digital_root(493193))
+
