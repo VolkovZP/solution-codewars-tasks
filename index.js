@@ -1,26 +1,36 @@
 'use strict';
-/* # Sum of Digits / Digital Root
+/* # Find the odd int
 
-Digital root is the recursive sum of all the digits in a number.
+Given an array of integers, find the one that appears an odd number of times.
 
-Given n, take the sum of the digits of n. If that value has more than one digit, continue reducing in this way until a single-digit number is produced. The input will be a non-negative integer.
+There will always be only one integer that appears an odd number of times.
 
-16  -->  1 + 6 = 7
-942  -->  9 + 4 + 2 = 15  -->  1 + 5 = 6
-132189  -->  1 + 3 + 2 + 1 + 8 + 9 = 24  -->  2 + 4 = 6
-493193  -->  4 + 9 + 3 + 1 + 9 + 3 = 29  -->  2 + 9 = 11  -->  1 + 1 = 2
+Examples
+[7] should return 7, because it occurs 1 time (which is odd).
+[0] should return 0, because it occurs 1 time (which is odd).
+[1,1,2] should return 2, because it occurs 1 time (which is odd).
+[0,1,0,1,0] should return 0, because it occurs 3 times (which is odd).
+[1,2,2,3,3,3,4,3,3,3,2,2,1] should return 4, because it appears 1 time (which is odd).
 
 */
 
-const digital_root = (number) => {
-    const arr = String(number).split('')
-    const result = arr.reduce((acc, item) => acc += +item, 0)
-    if (arr.length > 1) {
-        arr.pop();
-        return digital_root(result)
+function findOdd(A) {
+    const sortObj = {};
+    A.forEach(element => {
+        if (!sortObj[element]) {
+            sortObj[element] = 0
+        }
+        sortObj[element]++
+    });
+
+    for (const [key, value] of Object.entries(sortObj)) {
+        if (value % 2 === 1) return Number(key)
     }
-    return result
 }
+console.log(findOdd([20, 1, -1, 2, -2, 3, 3, 5, 5, 1, 2, 4, 20, 4, -1, -2, 5]))
+console.log(findOdd([1, 1, 2, -2, 5, 2, 4, 4, -1, -2, 5]))
+console.log(findOdd([1, 1, 1, 1, 1, 1, 10, 1, 1, 1, 1]))
+console.log(findOdd([5, 4, 3, 2, 1, 5, 4, 3, 2, 10, 10]))
 
-console.log(digital_root(493193))
 
+// const findOdd = (xs) => xs.reduce((a, b) => a ^ b);
