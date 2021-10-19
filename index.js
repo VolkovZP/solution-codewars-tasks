@@ -1,25 +1,20 @@
 'use strict';
-/* # Simple Pig Latin
+/* # Sorted Obj
 
-Move the first letter of each word to the end of it, then add "ay" to the end of the word. Leave punctuation marks untouched.
-
-Examples
-pigIt('Pig latin is cool'); // igPay atinlay siay oolcay
-pigIt('Hello world !');     // elloHay orldway !
 
 */
 
-function pigIt(str) {
-    const punctuationMarks = '.,!?;:^&*()_+-'
-    let result = ''
 
-    str.split(' ').map(item => {
-        if (!punctuationMarks.includes(item)) {
-            result += item.slice(1) + item[0] + 'ay' + ' '
+const groupBy = (arr, callback) => {
+    const result = {};
+    arr.forEach(item => {
+        if (result[callback(item)]) {
+            result[callback(item)].push(item)
         } else {
-            result += item + ' '
+            result[callback(item)] = [item]
         }
     })
-    return result.trim()
+    return result
 }
-console.log(pigIt('Hello world !'))
+
+console.log(groupBy([6.1, 4.2, 6.3, 4.4, 3.8], Math.floor))
